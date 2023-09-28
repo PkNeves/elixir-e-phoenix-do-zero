@@ -3,6 +3,11 @@ nome: fizz_buzz
 descrição: dado uma lista \[1,2,3,4,5,6,10,15\] se o número for múltiplo de 3, alteramos por `fizz` se o número for múltiplo de 5, alteramos por `buzz` e se o número for múltiplo de 3 e 5, alteramos por `fizz_buzz`.
 
 ## Alguns códigos úteis
+Criar um projeto
+```shell
+mix new project_name
+```
+
 Compilar o projeto
 ```shell
 mix compile
@@ -29,7 +34,7 @@ iex -S mix
 ```
 
 ## Aprendizados
-- Comandos básicos `mix compile`, `mix test`, `mix build`, `iex`, `iex -S mix`
+- Comandos básicos `mix new project_name`, `mix compile`, `mix test`, `mix build`, `iex`, `iex -S mix`
 - Criação de módulos e funções através do `defmodule` e `def`
 - Pattern Matching 
 - Controlando o fluxo de dados com `case`, `if else`, `funções`
