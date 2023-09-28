@@ -39,3 +39,11 @@ iex -S mix
 - Sintaxe reduzida para funções anônimas
 - Guards
 - Testes
+
+# Segundo Projeto
+nome: ExMon
+descrição: Um jogo de turnos com um jogador vs computador. O jogador e o computador tem 100 pontos de vida cada e, em cada turno, eles farão suas jogadas, que podem ser:
+- ataque moderado (18-25) de dano
+- ataque variado (10-35) de dano
+- cura (18-25) de vida.
+A cada movimento será exibido na tela exibiremos o que houve com cada jogador e quando um dos dois jogadores chegar a 0 de vida, o jogo acaba.
