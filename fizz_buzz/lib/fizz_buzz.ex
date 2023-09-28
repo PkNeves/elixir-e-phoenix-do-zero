@@ -5,6 +5,9 @@ defmodule FizzBuzz do
     |> handle_file_read()
   end
 
-  def handle_file_read({:ok, result}), do: result
+  def handle_file_read({:ok, result}) do
+    list = String.split(result, ",")
+  end
+
   def handle_file_read({:error, reason}), do: reason
 end
