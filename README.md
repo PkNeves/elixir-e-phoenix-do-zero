@@ -12,3 +12,13 @@ Rodando os testes
 ```shell
 mix test
 ```
+
+Rodando o Elixir de forma iterativa
+```shell
+iex
+```
+
+Rodando o Elixir de forma iterativa dentro de um projeto
+```shell
+iex -S mix
+```
