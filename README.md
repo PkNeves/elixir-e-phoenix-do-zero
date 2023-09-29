@@ -61,3 +61,11 @@ defmodule ExMon.Player do
   defstruct [:life, :move]
 end
 ```
+
+## Dependências Externas
+Para adicionar dependências externas ao nosso projeto, basta adicionar um objeto dentro da lista que fica no arquivo `mix.exs` na pasta raiz do nosso projeto.
+Após adicionado nossa dependência no arquivo `mix.exs`, precisamos rodar o comando abaixo
+```shell
+mix deps.get
+```
+Ele será o responsável por baixar nossas dependências.
