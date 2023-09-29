@@ -52,3 +52,12 @@ descrição: Um jogo de turnos com um jogador vs computador. O jogador e o compu
 - ataque variado (10-35) de dano
 - cura (18-25) de vida.
 A cada movimento será exibido na tela exibiremos o que houve com cada jogador e quando um dos dois jogadores chegar a 0 de vida, o jogo acaba.
+
+## Struct
+Struct é um mapa com com um maior controle dos dados. Na Struct conseguimos definir quais as chaves devemos ter, quais chaves são obrigatórias e definir chaves com valores já definidos.
+A declaração de uma struct segue como o exemplo abaixo
+```elixir
+defmodule ExMon.Player do
+  defstruct [:life, :move]
+end
+```
