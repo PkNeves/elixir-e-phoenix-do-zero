@@ -69,3 +69,48 @@ Após adicionado nossa dependência no arquivo `mix.exs`, precisamos rodar o com
 mix deps.get
 ```
 Ele será o responsável por baixar nossas dependências.
+
+## Case de testes
+No Elixir é muito fácil testar. Os módulos de teste ficam na pasta /test. O nome dos arquivos seguem o padrão `<modulo>_test.exs`, onde o `<modulo>` é o módulo que se deseja testar.
+
+Todos os módulos de teste deve incluir o modulo `ExUnit.Case` através do `use` ficando logo abaixo da definição do módulo
+```elixir
+use ExUnit.Case
+```
+
+O padrão para se testar uma função é usar a função `describe` para descrever a função que se deseja testar e, dentro da função `describe` usar a função `test` onde temos a descrição do teste sendo feito. Dentro da função `test` temos a chamada da função `assert` que irá verificar se os valores estão de acordo. Segue um exemplo abaixo
+```elixir
+defmodule ExMon.GameTest do
+  use ExUnit.Case
+
+  alias ExMon.{Game, Player}
+
+  describe "start/2" do
+    test "starts the game state" do
+      player = Player.build("Petterson", :chute, :soco, :cura)
+      computer = Player.build("Robotinik", :chute, :soco, :cura)
+
+      assert {:ok, _pid} = Game.start(computer, player)
+    end
+  end
+```
+
+Uma função legal que descobri é uma função para se testar as saídas de IO.
+Para testar as strings, podemos usar o módulo `import ExUnit.CaptureIO` e usar a função `capture_io` para capturar as mensagens de retorno. Segue um exemplo abaixo
+
+```elixir
+describe "start_game/1" do
+    test "when the game is started, returns a message" do
+      player = Player.build("Petterson", :soco, :chute, :cura)
+
+      messages =
+        capture_io(fn ->
+          assert ExMon.start_game(player) == :ok
+        end)
+
+      assert messages =~ "The game is started"
+      assert messages =~ "status: :started"
+      assert messages =~ "turn: :player"
+    end
+  end
+```
