@@ -175,3 +175,30 @@ Uma vez configurado nosso banco e deixado ele ativo, podemos rodar nossa aplica�
 mix phx.server
 ```
 Esse código irá nos restornar, no terminal, a url do nosso serviço localmente. Por padrão essa rota é a `http://localhost:4000`, mas não temos nada nessa rota, então podemos adicionar o caminho `/dev/dashboard`, ficando `http://localhost:4000/dev/dashboard`, onde o phoenix nos retornará um dashboard dos status da nossa aplicação.
+
+## Criando nosso primeiro controller
+Na pasta banana_bank_web criamos, dentro de controller, nosso primeiro controller. O nome do controller será `welcome_controller`, dentro dele precisamos fazer um use do nosso `banana_bank_web` e criar a rota de index.
+Exemplo abaixo
+```elixir
+defmodule BananaBankWeb.WelcomeController do
+  use BananaBankWeb, :controller
+
+  def index(conn, params) do
+    # IO.inspect(conn)
+    IO.inspect(params)
+
+    conn
+    |> put_status(:ok)
+    |> json(%{message: "asd"})
+  end
+end
+```
+Dentro da nosso arquivo `/banana_bank_web/router.ex` criamos uma rota dentro do escopo da api que passa nosso controller novo e qual a função a ser chamada
+```elixir
+scope "/api", BananaBankWeb do
+    pipe_through(:api)
+
+    get("/", WelcomeController, :index)
+  end
+```
+
