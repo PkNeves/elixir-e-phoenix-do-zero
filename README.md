@@ -168,3 +168,10 @@ Siga os passos abaixo
 3. Rode o comando para criar o banco de dados da aplicação `mix ecto.setup`
 
 Seguindo os passos acima é quase certeza que tudo irá funcionar, mas caso não funcione, vejo o erro e procure soluções.
+
+## Rodando o nosso serviço
+Uma vez configurado nosso banco e deixado ele ativo, podemos rodar nossa aplicação localmente com o comando
+```shell
+mix phx.server
+```
+Esse código irá nos restornar, no terminal, a url do nosso serviço localmente. Por padrão essa rota é a `http://localhost:4000`, mas não temos nada nessa rota, então podemos adicionar o caminho `/dev/dashboard`, ficando `http://localhost:4000/dev/dashboard`, onde o phoenix nos retornará um dashboard dos status da nossa aplicação.
