@@ -145,3 +145,17 @@ O código final ficará então:
 ```shell
 mix phx.new banana_bank --no-assets --no-html --no-mailer
 ```
+## Estrutura de pastas
+Dentro da pasta raiz temos algumas pastas importantes que vamos destacar
+
+### Config
+Nesta pasta ficarão as config do nosso projeto.
+Tudo que estiver no arquivo `.config.exs` é aplicado a todos os ambientes que temos
+Pastas com nome específico do ambiente tem as configurações aplicadas apenas nesse ambiente, como o cado do `dev.exs` que terá configurações apenas para o ambiente de desenvolvimento
+A pasta `runtime.exs` contém as configurações que será aplicada em tempo de execução.
+
+Uma parte que vale a pena destacar é que no `dev.exs` temos as configurações do banco de dados. Se caso sugir erros no Ecto. Pode ser que o problema esteja aqui.
+### Lib
+A pasta lib é o coração da nossa aplicação, dentro dela temos duas pastas iniciais, uma com o nome do nosso projeto e outro com o nome do nosso projeto mais a palavra web.
+- Web: parte da API
+- Normal: lógica interna.
