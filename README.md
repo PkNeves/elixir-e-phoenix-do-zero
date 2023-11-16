@@ -114,3 +114,34 @@ describe "start_game/1" do
     end
   end
 ```
+
+# Terceiro Projeto
+Nesse terceiro projeto nós vamos aprender um CRUD usando o Phoenix. Essa aplicação será de um aplicativo de banco que irá englobar os conceitos abaixo:
+- Criação de APIs JSON
+  - Framkework Phoenix
+    - Estrutura de pastas
+    - Separação por contexto
+  - Ecto para lidar com banco de dados
+  - Como lidar com erros com fallback controllers
+  - Testes
+- Requisições para API externas
+  - Como utilizar a lib Tesla
+  - Como testar requisições externas
+- Transações com Ecto.Multi
+  - Garantindo indepotência em nossas ações
+- Autenticação de API's utilizando recursos nativos
+- Deploy da nossa aplicação pro Fly.io
+
+## Criando nossa aplicação
+Antes de começar, precisamos de algumas configurações
+1. Ter o phoenix instalado. Caso você não tenha, pode instalar com o comando a seguir `mix archive.install hex phx.new`
+2. Ter o postgresql instalado.
+
+Nesse projeto, vamos criar apenas uma api json, sem frontend, então vamos passar alguns parâmetros na hora de rodar o código de criar o projeto, sendo eles:
+- `--no-assets`
+- `--no-html`
+- `--no-mailer`
+O código final ficará então:
+```shell
+mix phx.new banana_bank --no-assets --no-html --no-mailer
+```
