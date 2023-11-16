@@ -159,3 +159,12 @@ Uma parte que vale a pena destacar é que no `dev.exs` temos as configurações 
 A pasta lib é o coração da nossa aplicação, dentro dela temos duas pastas iniciais, uma com o nome do nosso projeto e outro com o nome do nosso projeto mais a palavra web.
 - Web: parte da API
 - Normal: lógica interna.
+
+## Configurando PostgreSql
+Bom, foi falado acima que as configurações do banco ficam no arquivo `config/dev.exs`, mas antes disso é preciso configurar o postgres junto ao docker.
+Siga os passos abaixo
+1. Abra o console do Docker e veja se já existe alguma aplicação rodando na porta 5432:5432. Caso esteja, pare esse serviço
+2. Crie uma nova instância do docker com o comando a seguir `docker run --name banana_bank_dev -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres`
+3. Rode o comando para criar o banco de dados da aplicação `mix ecto.setup`
+
+Seguindo os passos acima é quase certeza que tudo irá funcionar, mas caso não funcione, vejo o erro e procure soluções.
