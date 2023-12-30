@@ -230,3 +230,17 @@ end
 Pronto, agora você terá um banco versionado e cada mudança deve ser feita a partir dos passo acima
 
 
+## Changeset 
+Changeset é um conjunto de mudanças. Ele prepara os dados para serem inseridos no banco de dados. Ele também nos retorna se os dados que queremos salvar no banco de dados é válido e ainda podemos fazer a validação dos dados.
+
+Essa combinação de dados em elixir para dados preparados para o banco é feito através da função `cast/3`
+
+As verificações são feitas através da função `valida_<nome_da_validação>`. Existem várias funções de validate e você pode conferir todas elas na documentação.
+
+## Repo
+Repo é uma biblioteca que usamos para dar ações para o nosso banco de dados. No Repo temos funções do tipo 
+- `Repo.insert/1`: que inserer um dados no banco de dados através do changeset criado anteriormente
+- `Repo.get/2`: que busca um dado do banco de dados.
+Entre outras.
+
+Resumindo, o `Changeset` prepara e valida os dados enquanto o `Repo` efetiva as ações no banco.
