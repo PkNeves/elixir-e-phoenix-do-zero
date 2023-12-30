@@ -202,3 +202,31 @@ scope "/api", BananaBankWeb do
   end
 ```
 
+## Criando uma migration
+
+Migrations são o versionamento do banco de dados. Nela você colcoa o código de cada alteração feita para que uma pessoa que baixe seu repositório consiga ter tudo pronto e se caso haja necessidade de voltar em algum estado anterior, é possível.
+
+### Como funciona
+1. Gerar uma migration a partir de um comando `mix ecto.gen.migration <nome_da_migration>`. Esse comando irá gerar um arquivo no qual você pode inserir a mudança que você quer que aconteça no banco de dados. 
+2. Inserir mudanças no banco. Abaixo está um exemplo de criação de tabela
+```elixir
+defmodule BananaBank.Repo.Migrations.AddUser do
+  use Ecto.Migration
+
+  def change do
+    create table("users") do
+      add(:name, :string, null: false)
+      add(:password_hash, :string, null: false)
+      add(:email, :string, null: false)
+      add(:cep, :string, null: false)
+
+      timestamps()
+    end
+  end
+end
+```
+3. Rodar o comando para efetivar essas mudanças no banco de dados `mix ecto.migrate`. Para desfazer esse alteração, basta usar o comando `mix ecto.rollback`
+
+Pronto, agora você terá um banco versionado e cada mudança deve ser feita a partir dos passo acima
+
+
