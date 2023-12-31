@@ -244,3 +244,22 @@ Repo é uma biblioteca que usamos para dar ações para o nosso banco de dados. 
 Entre outras.
 
 Resumindo, o `Changeset` prepara e valida os dados enquanto o `Repo` efetiva as ações no banco.
+
+
+## Virtual Fields
+Nesse seção vamos aprender a criar campos virtuais. Campos virtuais são campos que vamos usar temporariamente no código, mas que não será salvo no banco de dados.
+
+Para criar um campo virtual, basta seguir o exemplo abaixo, colocando o parâmetro `virtual: true` no nosso Schema.
+```elixir
+  schema "users" do
+    field(:name, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    field(:email, :string)
+    field(:cep, :string)
+
+    timestamps()
+  end
+```
+
+Nesse caso estamos criando o campo virtual `password`, isso porque não queremos salvar a senha do usuário de modo puro no nosso banco, queremos criptografá-la antes. Para fazer isso, vamos receber esse campo virtual `password` e transformá-lo em um hash usando a biblioteca `Argon2`. No código tem mais especificações de como isso é feito. Mas em resumo é isso.
