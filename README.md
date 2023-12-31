@@ -273,3 +273,42 @@ Nos arquivo `router.ex` temos uma forma de criar todas as rotas relativas a um e
 ## Create User Controller
 Dentro de `banana_bank_web/controllers` criamos o arquivo `users_controller.ex` Esse arquivo ficará responsável por chamar as funções previamente criadas no `banana_bank/user` e lidar com a resposta para o usuário. 
 Ele é o intermediador entre as views e os models.
+
+## Adapta Json for Phoenix 1.7
+A visualiação do `banana_bank_web/controllers/user_controller.ex` usando o `render("error.json", error)` por exemplo, é a forma como era usado no `Phoenix 1.6`. A nova forma é definir um atom no lugar da string. Esse atom representa o nome de um função que será chamada no arquivo `users_json.ex` que também estará dentro do controller.
+
+Um ponto de atenção é que o defmodule desse arquivo precisa ter o nome `JSON` tudo em caixa alta no final.
+
+Bom, os exemplos estão abaixo
+
+
+`banana_bank_web/controllers/user_controller.ex`
+```elixir
+def handle_response({:ok, user}, conn) do
+  conn
+  |> put_status(:created)
+  |> render(:create, user: user)
+end
+```
+`banana_bank_web/controllers/user_json.ex`
+```elixir
+defmodule BananaBankWeb.UsersJSON do
+  alias BananaBank.Users.User
+
+  def create(%{user: user}) do
+    %{
+      message: "User criado com sucesso!",
+      data: data(user)
+    }
+  end
+
+  defp data(%User{} = user) do
+    %{
+      id: user.id,
+      cep: user.cep,
+      email: user.email,
+      name: user.name
+    }
+  end
+end
+```
