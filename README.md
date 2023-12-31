@@ -316,3 +316,8 @@ end
 Quando lidamos com funções que fogem do padrão, ou seja, mandar a renderização de erros para fora do user, usamos a função `put_view/1` e nela especificamos qual arquivo será chamado. Isso serve para que ao chamar a função `render_view/2` ela saiba de qual arquivo chamar.
 
 Adicionamos uma função a mais dentro do `banana_bank_web/controllers/errors_json.ex` que serve para traduzir erros de changeset. Essa função foi nomeada como `translate_erros/1`
+
+## Fallback Controller
+Um Fallback Controller é uma forma mais inteligente de lidar com erros. É uma convenção do Phoenix e está descrita na documentação.
+A ideia é lidar com apenas com caso de sucesso no nosso controllers e tudo que for erro vai cair no fallbackcontroller.
+Para que isso funcione, precisamos usar a estrutura de controle `with`, para que o erro seja passado para frente.
