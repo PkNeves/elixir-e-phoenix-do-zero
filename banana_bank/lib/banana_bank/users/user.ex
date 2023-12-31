@@ -24,12 +24,8 @@ defmodule BananaBank.Users.User do
   end
 
   def add_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    IO.inspect("Password hash")
     change(changeset, Argon2.add_hash(password))
   end
 
-  def add_password_hash(changeset) do
-    IO.inspect("erro")
-    # changeset
-  end
+  def add_password_hash(changeset), do: changeset
 end
