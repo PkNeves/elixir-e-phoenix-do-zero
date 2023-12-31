@@ -263,3 +263,13 @@ Para criar um campo virtual, basta seguir o exemplo abaixo, colocando o parâmet
 ```
 
 Nesse caso estamos criando o campo virtual `password`, isso porque não queremos salvar a senha do usuário de modo puro no nosso banco, queremos criptografá-la antes. Para fazer isso, vamos receber esse campo virtual `password` e transformá-lo em um hash usando a biblioteca `Argon2`. No código tem mais especificações de como isso é feito. Mas em resumo é isso.
+
+## Repo.insert
+Dentro de banana_bank/user criamos o arquivo create. Ele tem uma responsabilidade única de criação do usuário. Isso deixa o código mais modular
+
+## Make all router using a unique command
+Nos arquivo `router.ex` temos uma forma de criar todas as rotas relativas a um escopo usando o comando `resources/3` Essa função irá criar todas as rotas padrão, mas podemos passar no terceiro argumento um campo de options, especificando apenas as que queremos.
+
+## Create User Controller
+Dentro de `banana_bank_web/controllers` criamos o arquivo `users_controller.ex` Esse arquivo ficará responsável por chamar as funções previamente criadas no `banana_bank/user` e lidar com a resposta para o usuário. 
+Ele é o intermediador entre as views e os models.
