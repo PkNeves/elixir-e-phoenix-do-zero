@@ -321,3 +321,7 @@ Adicionamos uma função a mais dentro do `banana_bank_web/controllers/errors_js
 Um Fallback Controller é uma forma mais inteligente de lidar com erros. É uma convenção do Phoenix e está descrita na documentação.
 A ideia é lidar com apenas com caso de sucesso no nosso controllers e tudo que for erro vai cair no fallbackcontroller.
 Para que isso funcione, precisamos usar a estrutura de controle `with`, para que o erro seja passado para frente.
+
+## Using Facade
+Usando fachada para deixar nosso código mais legível. O uso de fachada faz com que toda aplicação use um arquivo intermediário que te o redirecionamento de todas as nossas funções.
+No código alterado, ao invés de chamarmos o Usuario com a função `Create.call` iremos chamar a função de fechada `Users.call`. Isso facilita o entendimento e cria, como se fosse um sumário, de todas as funções que temos daquele controller.
