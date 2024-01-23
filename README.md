@@ -229,6 +229,10 @@ end
 
 Pronto, agora você terá um banco versionado e cada mudança deve ser feita a partir dos passo acima
 
+Outros comandos uteis são:
+`mix ecto.reset`: que irá resetar todo o banco e rodar as migrations novamente
+`mix ecto.setup`: não irá resetar o banco, mas irá criar e rodar as migrations se for necessário.
+
 
 ## Changeset 
 Changeset é um conjunto de mudanças. Ele prepara os dados para serem inseridos no banco de dados. Ele também nos retorna se os dados que queremos salvar no banco de dados é válido e ainda podemos fazer a validação dos dados.
@@ -236,6 +240,11 @@ Changeset é um conjunto de mudanças. Ele prepara os dados para serem inseridos
 Essa combinação de dados em elixir para dados preparados para o banco é feito através da função `cast/3`
 
 As verificações são feitas através da função `valida_<nome_da_validação>`. Existem várias funções de validate e você pode conferir todas elas na documentação.
+> Ponto de atenção: A função changeset espera, como primeiro argumento, um struct do módulo, ou seja, chamar User.changeset(User, params) não funciona, tem que passar User.changeset(%User{}, params) ou deixar o primeiro campo vazio, por já ter um default %\_\_MODULE\_\_{} no primeiro parâmetro.
+
+> Outra observação: o mapa que é passado nos parâmetros pode conter valores que o changeset não irá usar, pois ele valirá apenas os fields necessários.
+
+> OBS 3: O changeset retorna uma estrutura do changeset que pode ser válido ou não. Ele ainda não salvou nada no banco, ele estruturou e validou os campos.
 
 ## Repo
 Repo é uma biblioteca que usamos para dar ações para o nosso banco de dados. No Repo temos funções do tipo 
@@ -323,5 +332,5 @@ A ideia é lidar com apenas com caso de sucesso no nosso controllers e tudo que 
 Para que isso funcione, precisamos usar a estrutura de controle `with`, para que o erro seja passado para frente.
 
 ## Using Facade
-Usando fachada para deixar nosso código mais legível. O uso de fachada faz com que toda aplicação use um arquivo intermediário que te o redirecionamento de todas as nossas funções.
+Usando fachada para deixar nosso código mais legível. O uso de fachada faz com que toda aplicação use um arquivo intermediário que faz o redirecionamento de todas as nossas funções.
 No código alterado, ao invés de chamarmos o Usuario com a função `Create.call` iremos chamar a função de fechada `Users.call`. Isso facilita o entendimento e cria, como se fosse um sumário, de todas as funções que temos daquele controller.
