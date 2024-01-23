@@ -334,3 +334,9 @@ Para que isso funcione, precisamos usar a estrutura de controle `with`, para que
 ## Using Facade
 Usando fachada para deixar nosso código mais legível. O uso de fachada faz com que toda aplicação use um arquivo intermediário que faz o redirecionamento de todas as nossas funções.
 No código alterado, ao invés de chamarmos o Usuario com a função `Create.call` iremos chamar a função de fechada `Users.call`. Isso facilita o entendimento e cria, como se fosse um sumário, de todas as funções que temos daquele controller.
+
+## Derivativa
+Ele ajuda a renderizar seu schema de forma mais controlada, definindo quais campos vão ser exibidos.
+Ele é colocado no schema e daí você escolhe quais campos quer com a opção `only` ou quais campos retirar com a opção `except`.
+
+O uso de derive depende do ituito. O instrutor falou que hoje em dia não prefere usar por preferir coisas mais explicitas. Irei colocar a nível de estudo.
