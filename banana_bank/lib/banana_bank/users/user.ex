@@ -2,7 +2,8 @@ defmodule BananaBank.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_params [:name, :password, :email, :cep]
+  @required_params_create [:name, :password, :email, :cep]
+  @required_params_update [:name, :email, :cep]
 
   @derive {Jason.Encoder, only: [:name, :id, :email, :cep]}
   schema "users" do
@@ -15,10 +16,19 @@ defmodule BananaBank.Users.User do
     timestamps()
   end
 
-  def changeset(user \\ %__MODULE__{}, params) do
+  def changeset(params) do
+    %__MODULE__{}
+    |> cast(params, @required_params_create)
+    |> validate_required(@required_params_create)
+    |> validate_length(:name, min: 3)
+    |> validate_format(:email, ~r/@/)
+    |> add_password_hash()
+  end
+
+  def changeset(user, params) do
     user
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
+    |> cast(params, @required_params_create)
+    |> validate_required(@required_params_update)
     |> validate_length(:name, min: 3)
     |> validate_format(:email, ~r/@/)
     |> add_password_hash()
