@@ -340,3 +340,7 @@ Ele ajuda a renderizar seu schema de forma mais controlada, definindo quais camp
 Ele é colocado no schema e daí você escolhe quais campos quer com a opção `only` ou quais campos retirar com a opção `except`.
 
 O uso de derive depende do ituito. O instrutor falou que hoje em dia não prefere usar por preferir coisas mais explicitas. Irei colocar a nível de estudo.
+
+## Update
+A função `Repo.update` tem uma peculiaridade. Precisamos usar o changeset para fazer o update, porém o changeset também é usado no create e as validações de criação de atualização podem ser diferentes.
+Há várias maneiras de contornar isso, como criar um changeset para cada operação. Não vou delongar sobre as possibilidades, é só um ponto de atenção.
