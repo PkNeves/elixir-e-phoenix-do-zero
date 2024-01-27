@@ -347,3 +347,30 @@ Há várias maneiras de contornar isso, como criar um changeset para cada opera�
 
 ## Biblioteca ex_machine
 Uma biblioteca de Factory para facilitar a criação de usuários para teste.
+
+# Section 6 Realizando requisições externas
+
+## 68. Introdução ao Tesla
+Tesla é uma lib que ajuda a lidar com requisições externas. No nosso caso, vamos usar ela para consumir uma api de cep, para trazer os dados do cep do usuário.
+
+### 68.1 Adicionando o Tesla
+Para a adicionar o Tesla é bem simples, assim como em todas as outras dependencias, só precisamos incluir o tesla no `deps` que fica no nosso arquivo `/mix.exs`
+```elixir
+
+defp deps do
+[
+  {:tesla, "~> 1.4"},
+  #...
+]
+```
+Lembrando que, toda vez que for adicionado uma nova dependência, temos que rodar o comando `mix deps.get` para ele trazer essa dependência para nosso código.
+
+### 68.2 Usando o Tesla
+Para usar o tesla basta chamar `Tesla.get(url)`. Também é possível usar `post`, basta conferir a documentação
+
+### 68.3 Tesla Middleware
+Middleware no tesla são funções de transaformações que atuam nas nossas requisições.
+Um exemplo é o JSON que já faz o parse do body caso o `content/type` seja `json` e o `BaseUrl` que define uma url base entre outros.
+
+
+

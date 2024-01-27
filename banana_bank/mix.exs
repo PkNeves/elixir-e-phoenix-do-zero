@@ -33,6 +33,7 @@ defmodule BananaBank.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7.2"},
+      {:tesla, "~> 1.4"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
