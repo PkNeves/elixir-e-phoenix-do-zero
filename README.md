@@ -392,3 +392,151 @@ defp deps do
 Uma observação importante e que me travou um tempo é que ao utilizar o bypass você precisar explicitar sua utilização ao final da descrição do `test` . Se você não fizer isso vai dar erro.
 
 Fizemos os teste do viacep passarem, agora precisamos fazer nossos antigos testes passagem, pois eles estão usando o viacep
+
+
+### 74 Utilizando a lib Mox
+Mox é uma prática recomendada pelo próprio José Valim. Você pode ler sobre através do [link](https://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/)
+Essa lib irá nos ajudar a fazer um Mock das nossas requisições de uma maneira mais limpa no código, centralizando todo o nosso conjunto de Mocks em um lugar só.
+
+Para isso, precisamos baixar a lib `mox` e incluir ela no nosso `/mix.exs` dentro de `deps`
+```elixir
+
+defp deps do
+[
+  {:mox, "~> 1.0", only: :test}
+]
+end
+```
+
+#### 74.1 Criando o Behaviour
+Para utilizar essa lib, primeiro precisamos adicionar um behaviour. Behaviour é um contrato que define o indicando o esperado de uma função e seu retorno. Um contrato de função que irá definir quais parâmetros passar e o qual será o retorno.
+
+Para fazer nosso behaviour, precisamos adicionar um novo arquivo `/lib/banana_bank/via_cep/client_behaviour.ex` e incluir a diretiva `@callback`
+
+No nosso client do via_cep a única função que temos é a `call/2`. Como o primeiro argumento tem um default, só iremos nos preocupar com o parâmetro passado, que é o cep. Veja o exemplo abaixo do arquivo `/lib/banana_bank/via_cep/client_behaviour.ex`
+```elixir
+defmodule BananaBank.ViaCep.ClientBehaviour do
+  @callback call(String.t()) :: {:ok, map()} | {:error, :atom}
+end
+```
+#### 74.2 Adicionando o Behaviour no nosso client
+Depois de definido o contrato, precisamos usá-lo. Para isso vamos alterar nosso arquivo `/lib/banana_bank/via_cep/client.ex`
+adicionado a diretiva `@behaviour` que irá explicitar que utilizaremos um `@behaviour` e a diretiva `@impl` que indicará qual função está usando o `@behaviour`. Veja abaixo
+```elixir
+defmodule BananaBank.ViaCep.Client do
+
+  alias BananaBank.ViaCep.ClientBehaviour
+
+  @behaviour ClientBehaviour
+
+  @impl ClientBehaviour
+  def call(url \\ @default_url, cep) do
+    "#{url}/#{cep}/json"
+    |> get()
+    |> handle_response()
+  end
+```
+
+#### 74.3 Configurando o Behaviour para ambiente de test
+Agora precisamos configurar nosso behaviour para ambiente de teste. Isso porque, quando o ambiente for de teste, queremos usar o Mock e não a função padrão.
+Para isso vamos adicionar nossa configuração de mock dentro de `/test/support/test_helper.ex` e adicionar nossa configuração de mock
+```elixir 
+Mox.defmock(BananaBank.ViaCep.ClientMock, for: BananaBank.ViaCep.ClientBehaviour)
+Application.put_env(:banana_bank, :via_cep_client, BananaBank.ViaCep.ClientMock)
+
+ExUnit.start()
+Ecto.Adapters.SQL.Sandbox.mode(BananaBank.Repo, :manual)
+```
+A primeira cria um mock para o módulo `BananaBank.ViaCep.ClientBehaviour` 
+A segunda linha adiciona no nosso arquivo `.env`, dinamicamente, a config do mock dentro das chaves `banana_bank, :via_cep_client`
+
+#### 74.4 Escolhendo qual função usar de acordo com o ambiente
+Agora que temos um mock sendo definido no nosso arquivo `.env` podemos mudar os locais onde o `BananaBank.ViaCep.Client` é usado para chamar a função dinamicamente de acordo com o ambiente.
+O módulo `ViaCep` é usando dentro do `users/create.ex` apenas, logo dentro desse arquivo, vamos criar uma nova função, nesse caso chamamos de `client/0` que importa uma função do arquivo `.env`. Se houver essa configuração no `.env` iremos retornar a função do `.env`, mas caso não estiver, retormamos a função padrão `ViaCepClient`
+```elixir
+  alias BananaBank.ViaCep.Client, as: ViaCepClient
+
+  def call(%{"cep" => cep} = params) do
+    with {:ok, _cep} <- client().call(cep) do
+      params
+      |> User.changeset()
+      |> Repo.insert()
+    end
+  end
+
+  defp client() do
+    Application.get_env(:banana_bank, :via_cep_client, ViaCepClient)
+  end
+end
+```
+
+#### 74.5 Usando Mock nos testes
+Primeiro é preciso incluir a biblioteca `Mox` no nosso arquivo de teste 
+```elixir
+import Mox
+```
+Depois criamos um setup 
+```elixir
+setup :verify_on_exit!
+```
+Com isso feito, podemos usar o mox dentro dos nossos testes
+```elixir
+expect(ClientMock, :call, fn _cep ->
+        {:ok, body}
+      end)
+```
+Onde passamos o módulo, a função a ser chamada e configuramos o retorno com uma função anônima
+
+Se estiver duplicando muito uma variável em todos os testes, é possível incluir ela no `setup` de maneira a reutilizar as variáveis.
+Lembrando que você tem que especificar seu uso após a chamada do `test`
+```elixir
+setup do
+    body = %{
+      "bairro" => "Centro",
+      "cep" => "36570-017",
+      "complemento" => "",
+      "ddd" => "31",
+      "gia" => "",
+      "ibge" => "3171303",
+      "localidade" => "Viçosa",
+      "logradouro" => "Rua Alexandre Ferreira Mendes",
+      "siafi" => "5427",
+      "uf" => "MG"
+    }
+
+    {:ok, %{body: body}}
+  end
+
+  describe "create/2" do
+    test "successfully creates an user", %{conn: conn, body: body} do
+      params = %{
+        "name" => "Pet",
+        "email" => "pet@hot.com",
+        "cep" => "36570017",
+        "password" => "321"
+      }
+
+      expect(ClientMock, :call, fn _cep ->
+        {:ok, body}
+      end)
+
+      response =
+        conn
+        |> post(~p"/api/users", params)
+        |> json_response(:created)
+
+      assert %{
+               "data" => %{
+                 "cep" => "36570017",
+                 "email" => "pet@hot.com",
+                 "id" => _1,
+                 "name" => "Pet"
+               },
+               "message" => "User criado com sucesso!"
+             } = response
+    end
+    end
+```
+
+
+

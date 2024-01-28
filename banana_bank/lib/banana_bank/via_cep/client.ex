@@ -1,10 +1,14 @@
 defmodule BananaBank.ViaCep.Client do
   use Tesla
 
-  # plug(Tesla.Middleware.BaseUrl, "http://viacep.com.br/ws")
+  alias BananaBank.ViaCep.ClientBehaviour
+
   @default_url "http://viacep.com.br/ws"
   plug(Tesla.Middleware.JSON)
 
+  @behaviour ClientBehaviour
+
+  @impl ClientBehaviour
   def call(url \\ @default_url, cep) do
     "#{url}/#{cep}/json"
     |> get()
