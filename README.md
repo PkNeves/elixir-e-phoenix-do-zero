@@ -387,9 +387,8 @@ defp deps do
   {:bypass, "~> 2.1", only: :test},
   #...
 ]
+```
 
 Uma observação importante e que me travou um tempo é que ao utilizar o bypass você precisar explicitar sua utilização ao final da descrição do `test` . Se você não fizer isso vai dar erro.
 
 Fizemos os teste do viacep passarem, agora precisamos fazer nossos antigos testes passagem, pois eles estão usando o viacep
-
-
