@@ -372,5 +372,24 @@ Para usar o tesla basta chamar `Tesla.get(url)`. Também é possível usar `post
 Middleware no tesla são funções de transaformações que atuam nas nossas requisições.
 Um exemplo é o JSON que já faz o parse do body caso o `content/type` seja `json` e o `BaseUrl` que define uma url base entre outros.
 
+### 71 Iniciando com Bypass
+Quando temos rotas sendo chamadas na nossa aplicação, ao testar, essa chamada também será feita nos testes e não queremos isso.
+Pode acontecer de a rota falhar no momento do teste e isso pode invalidar nossos testes.
+Para contornar essa situação, usamos o que chamamos de `Mock`. Ele serve para criar uma requisição `fake` que seria o retorno esperado para aquela chamada.
+
+Dentro do Tesla já temos o Tesla Mock, mas o professor não gosta de usar pq ele apenas devolve uma resposta estática sem fazer a requisição de fato. Por conta disso o professor indicou a biblioteca `Bypass` por ela fazer a requisição de fato.
+
+Para instalar o `Bypass` basta adicionar essa dependência no `/mix.exs` dentro de `deps`
+```elixir
+
+defp deps do
+[
+  {:bypass, "~> 2.1", only: :test},
+  #...
+]
+
+Uma observação importante e que me travou um tempo é que ao utilizar o bypass você precisar explicitar sua utilização ao final da descrição do `test` . Se você não fizer isso vai dar erro.
+
+Fizemos os teste do viacep passarem, agora precisamos fazer nossos antigos testes passagem, pois eles estão usando o viacep
 
 
