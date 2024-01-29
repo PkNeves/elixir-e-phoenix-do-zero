@@ -537,6 +537,6 @@ setup do
     end
     end
 ```
-
-
-
+# Section 7 - Criando Transferências
+Nessa seção vamos aprender a trabalhar com transactions dentro do banco de dados usando o `Ecto.Mult`
+Para isso vamos criar uma tabela de contas e trabalhar em cima dela
