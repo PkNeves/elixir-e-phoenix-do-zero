@@ -540,3 +540,6 @@ setup do
 # Section 7 - Criando Transferências
 Nessa seção vamos aprender a trabalhar com transactions dentro do banco de dados usando o `Ecto.Mult`
 Para isso vamos criar uma tabela de contas e trabalhar em cima dela
+
+## 79 Associação entre tabelas
+Quando temos uma associação entre tabelas usamos o agrupamento `has_many` , `has_one` ou `many_to_many` para indicar a associação. Também precisamos adicionar `belong_to` na tabela que irá receber a associação.
