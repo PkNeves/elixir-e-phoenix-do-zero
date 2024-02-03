@@ -543,3 +543,4 @@ Para isso vamos criar uma tabela de contas e trabalhar em cima dela
 
 ## 79 Associação entre tabelas
 Quando temos uma associação entre tabelas usamos o agrupamento `has_many` , `has_one` ou `many_to_many` para indicar a associação. Também precisamos adicionar `belong_to` na tabela que irá receber a associação.
+As vezes é preciso criar novas migrations para definir constraints. Caso os dados do banco viole a constrait, talvez vc tenha que resetar o banco de dados.
