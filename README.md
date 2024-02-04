@@ -544,3 +544,9 @@ Para isso vamos criar uma tabela de contas e trabalhar em cima dela
 ## 79 Associação entre tabelas
 Quando temos uma associação entre tabelas usamos o agrupamento `has_many` , `has_one` ou `many_to_many` para indicar a associação. Também precisamos adicionar `belong_to` na tabela que irá receber a associação.
 As vezes é preciso criar novas migrations para definir constraints. Caso os dados do banco viole a constrait, talvez vc tenha que resetar o banco de dados.
+
+## 81 Usando Multi para transactions
+Quando precisamos usar a lógica de transação: Ou tudo funciona ou reverte tudo. Usamos o Ecto.Multi.
+Ele serve para definir um conjunto de altereções que precisam acontecer como um todo, se caso alguma delas falhar, ele reverte todas as operações.
+No nosso código, essa parte ficou explicitada no arquivo `/banana_bank/accounts/trasaction.ex` , onde fazemos operações de transação de uma conta para outra e se caso algo dê problema tudo é desfeito.
+Sempre começamos uma transaction com `Multi.new()` e finalizamos com `Repo.transaction()` para efetuar as mudanças.
