@@ -550,3 +550,9 @@ Quando precisamos usar a lógica de transação: Ou tudo funciona ou reverte tud
 Ele serve para definir um conjunto de altereções que precisam acontecer como um todo, se caso alguma delas falhar, ele reverte todas as operações.
 No nosso código, essa parte ficou explicitada no arquivo `/banana_bank/accounts/trasaction.ex` , onde fazemos operações de transação de uma conta para outra e se caso algo dê problema tudo é desfeito.
 Sempre começamos uma transaction com `Multi.new()` e finalizamos com `Repo.transaction()` para efetuar as mudanças.
+
+# Section 8 Autenticação
+
+## 84. Verificando usuário
+Vamos usar a própria lib `Argon` para verificar se o password do nosso usuário é válido ou não.
+Criamos um arquivo `/lib/banana_bank/users/verify.ex` que será o responsável por validar nosso usuário
