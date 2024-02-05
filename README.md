@@ -556,3 +556,8 @@ Sempre começamos uma transaction com `Multi.new()` e finalizamos com `Repo.tran
 ## 84. Verificando usuário
 Vamos usar a própria lib `Argon` para verificar se o password do nosso usuário é válido ou não.
 Criamos um arquivo `/lib/banana_bank/users/verify.ex` que será o responsável por validar nosso usuário
+
+## 85. Criação de Token
+Vamos usar o `Phoenix.Token` para essa aula.
+Ele vai ser responsável por gerar um token para nosso usuário com base nos parâmetros.
+Para isso criamos um novo arquivo `/lib/banana_bank_web/token.ex` que será o responsável por criar tokens e validá-los
