@@ -561,3 +561,6 @@ Criamos um arquivo `/lib/banana_bank/users/verify.ex` que será o responsável p
 Vamos usar o `Phoenix.Token` para essa aula.
 Ele vai ser responsável por gerar um token para nosso usuário com base nos parâmetros.
 Para isso criamos um novo arquivo `/lib/banana_bank_web/token.ex` que será o responsável por criar tokens e validá-los
+
+## 87. Autenticando User via Token
+Os Plugs recebem a conexão e alteram ela antes de chegar no controller.
